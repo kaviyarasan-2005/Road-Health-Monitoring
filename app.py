@@ -7,17 +7,16 @@ import random
 import string
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
-from utils.inference import ModelInference  # Import the inference class
+from utils.inference import ModelInference  
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_mail import Mail, Message
 from dotenv import load_dotenv
 load_dotenv()
-# Initialize the Flask application
+
 app = Flask(__name__, template_folder="templates")
 app.secret_key = os.environ.get('SECRET_KEY')
 
-# Email configuration
 app.config.update(
     MAIL_SERVER=os.environ.get('MAIL_SERVER'),
     MAIL_PORT=os.environ.get('MAIL_PORT'),
@@ -25,13 +24,12 @@ app.config.update(
     MAIL_USERNAME=os.environ.get('MAIL_USERNAME'),
     MAIL_PASSWORD=os.environ.get('MAIL_PASSWORD')
 )
-# Initialize Flask-Mail
+
 mail = Mail(app)
 
-# Store OTPs temporarily (in production, use a proper database)
 otp_store = {}
 
-# Define the upload folder for images
+
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'uploads')
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Create the upload folder if it doesn't exist
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER  # Set the upload folder in app config
@@ -510,4 +508,4 @@ def add_user_to_db(username, email, password):
         return False
 
 if __name__ == '__main__':
-    app.run()  # Run the app in debug mode
+    app.run() 
